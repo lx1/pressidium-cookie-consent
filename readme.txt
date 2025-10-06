@@ -186,6 +186,13 @@ If you have spotted any bugs, or would like to request additional features from 
 
 == Changelog ==
 
+= 1.8.1: Oct 7, 2025 =
+
+* Fix an issue with the names of the custom events pushed to the data layer for Google Tag Manager
+* Revert the modal headings to use `div` instead of `h2` to fix potential SEO issues
+* Remove no longer necessary `load_plugin_textdomain()` (plugins hosted on WordPress.org don't need it)
+* Integrate with Ninja Forms to prevent the cookie consent banner from loading on form previews
+
 = 1.8.0: May 5, 2025 =
 
 * Bump minimum required PHP version to 8.1
