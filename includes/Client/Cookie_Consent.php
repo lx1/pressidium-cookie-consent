@@ -217,7 +217,7 @@ class Cookie_Consent implements Actions, Filters {
             function onPressidiumCookieConsentUpdated(event) {
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
-                    event: 'pressidium-cookie-consent-' + event.type,
+                    event: event.type,
                     consent: event.detail,
                 });
             }
