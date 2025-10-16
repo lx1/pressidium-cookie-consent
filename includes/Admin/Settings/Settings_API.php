@@ -17,6 +17,7 @@ use Pressidium\WP\CookieConsent\Emoji;
 use Pressidium\WP\CookieConsent\Logs;
 use Pressidium\WP\CookieConsent\Geo_Locator;
 use Pressidium\WP\CookieConsent\Database\Tables\Consents_Table;
+use Pressidium\WP\CookieConsent\Utils\Date_Utils;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -1075,6 +1076,15 @@ class Settings_API implements Actions {
                     $row['analytics_consent']   = (bool) $row['analytics_consent'];
                     $row['targeting_consent']   = (bool) $row['targeting_consent'];
                     $row['preferences_consent'] = (bool) $row['preferences_consent'];
+
+                    // Convert UTC to WP timezone
+                    $consent_date = Date_Utils::utc_to_wp_timezone( $row['consent_date'], 'Y-m-d H:i:s (e)' );
+                    $created_at   = Date_Utils::utc_to_wp_timezone( $row['created_at'], 'Y-m-d H:i:s (e)' );
+                    $updated_at   = Date_Utils::utc_to_wp_timezone( $row['updated_at'], 'Y-m-d H:i:s (e)' );
+
+                    $row['consent_date'] = is_null( $consent_date ) ? $row['consent_date'] : $consent_date;
+                    $row['created_at']   = is_null( $created_at ) ? $row['created_at'] : $created_at;
+                    $row['updated_at']   = is_null( $updated_at ) ? $row['updated_at'] : $updated_at;
 
                     return $row;
                 },
