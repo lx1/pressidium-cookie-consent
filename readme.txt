@@ -186,7 +186,7 @@ If you have spotted any bugs, or would like to request additional features from 
 
 == Changelog ==
 
-= 1.8.1: Oct 7, 2025 =
+= 1.8.1: Oct 16, 2025 =
 
 * Fix an issue with the names of the custom events pushed to the data layer for Google Tag Manager
 * Revert the modal headings to use `div` instead of `h2` to fix potential SEO issues
