@@ -6,7 +6,7 @@ Tags: cookie, consent, gdpr, ccpa, cookies
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable Tag: 1.8.0
+Stable Tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,13 @@ If you have spotted any bugs, or would like to request additional features from 
 12. Pressidium Cookies Table block
 
 == Changelog ==
+
+= 1.8.1: Oct 16, 2025 =
+
+* Fix an issue with the names of the custom events pushed to the data layer for Google Tag Manager
+* Revert the modal headings to use `div` instead of `h2` to fix potential SEO issues
+* Remove no longer necessary `load_plugin_textdomain()` (plugins hosted on WordPress.org don't need it)
+* Integrate with Ninja Forms to prevent the cookie consent banner from loading on form previews
 
 = 1.8.0: May 5, 2025 =
 
