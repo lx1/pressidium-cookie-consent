@@ -62,7 +62,7 @@ class Settings_Page extends Page implements Actions, Filters {
      * @return string
      */
     protected function get_page_title(): string {
-        return __( 'Cookie Consent', 'pressidium-cookie-consent' );
+        return __( 'Pressidium Cookie Consent', 'pressidium-cookie-consent' );
     }
 
     /**
