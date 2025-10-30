@@ -213,6 +213,10 @@ class Settings {
                     'url_passthrough' => false,
                     'regions' => array(),
                 ),
+                'google_tag_gateway' => array(
+                    'proxy_enabled' => false,
+                    'gtag_id' => '',
+                ),
             ),
         );
     }

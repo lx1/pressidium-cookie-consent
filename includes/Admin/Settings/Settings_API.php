@@ -728,6 +728,21 @@ class Settings_API implements Actions {
                                 ),
                             ),
                         ),
+                        'google_tag_gateway' => array(
+                            'type' => 'object',
+                            'required' => array(
+                                'proxy_enabled',
+                                'gtag_id',
+                            ),
+                            'properties' => array(
+                                'proxy_enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'gtag_id' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -780,6 +795,24 @@ class Settings_API implements Actions {
     }
 
     /**
+     * Flush rewrite rules if Google Tag Gateway proxy setting changed.
+     *
+     * @param array $new_settings New settings.
+     *
+     * @return void
+     */
+    private function maybe_flush_rewrite_rules( array $new_settings ): void {
+        $prev_settings = Emoji::decode_array( $this->settings->get() );
+
+        $prev_tag_gateway_proxy_enabled = $prev_settings['pressidium_options']['google_tag_gateway']['proxy_enabled'] ?? false;
+        $new_tag_gateway_proxy_enabled  = $new_settings['pressidium_options']['google_tag_gateway']['proxy_enabled'] ?? false;
+
+        if ( $prev_tag_gateway_proxy_enabled !== $new_tag_gateway_proxy_enabled ) {
+            flush_rewrite_rules();
+        }
+    }
+
+    /**
      * Migrate the given settings to the latest version, if necessary.
      *
      * @param array $settings Settings to migrate.
@@ -819,6 +852,8 @@ class Settings_API implements Actions {
 
         $settings['revision'] = $this->maybe_increment_revision( $settings );
         $settings['version']  = VERSION;
+
+        $this->maybe_flush_rewrite_rules( $settings );
 
         $set_successfully = $this->settings->set( $settings );
 

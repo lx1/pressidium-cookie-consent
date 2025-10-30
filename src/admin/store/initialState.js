@@ -169,6 +169,10 @@ export default {
       url_passthrough: false,
       regions: [],
     },
+    google_tag_gateway: {
+      proxy_enabled: false,
+      gtag_id: '',
+    },
     ai: {
       provider: 'openai',
       model: 'gpt-3.5-turbo',
