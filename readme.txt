@@ -186,6 +186,16 @@ If you have spotted any bugs, or would like to request additional features from 
 
 == Changelog ==
 
+= 1.9.0: Oct 31, 2025 =
+
+* Introduce a server-side PHP proxy to route traffic to Google tag gateway for advertisers
+* Add meta boxes to the settings page to provide links to relevant resources
+* Move log directory to the uploads directory (`wp-content/uploads/pressidium-cookie-consent/logs/`)
+* Expose the `pressidium_cookie_consent_logs_path` filter to allow customizing the log file path
+* Convert and display consent record timestamps according to the WordPress timezone (instead of UTC)
+* Fix an issue where `pressidium_cookie_consent_get_cookies()` would trigger a warning when no settings existed
+* Fix a couple of a11y issues with the floating button
+
 = 1.8.1: Oct 16, 2025 =
 
 * Fix an issue with the names of the custom events pushed to the data layer for Google Tag Manager
