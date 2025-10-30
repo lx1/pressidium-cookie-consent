@@ -16,10 +16,6 @@
     &__tabs-item.active-tab {
       box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) transparent, inset 0 -1.5px 0 0 var(--wp-admin-theme-color);
     }
-
-    &__tab-content {
-      //padding: 16px 24px;
-    }
   }
 
   .components-base-control {
