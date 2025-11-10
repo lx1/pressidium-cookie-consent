@@ -11,4 +11,34 @@ pressidium-floating-button {
       word-wrap: anywhere;
     }
   }
+
+  // Hello Elementor conflict fix
+  .cc-link {
+    border: none;
+    border-bottom: 1px solid var(--cc-btn-primary-bg);
+    border-radius: 0;
+    padding: 0;
+    font-size: 1em;
+
+    &:hover {
+      border-color: transparent !important;
+      background-color: transparent;
+      color: var(--cc-btn-primary-bg);
+    }
+
+    &:focus {
+      background-color: transparent;
+      color: var(--cc-btn-primary-bg);
+    }
+  }
+
+  .c-bn {
+    border: none;
+  }
+
+  .b-tl {
+    border: none;
+    color: inherit;
+    text-align: left;
+  }
 }
