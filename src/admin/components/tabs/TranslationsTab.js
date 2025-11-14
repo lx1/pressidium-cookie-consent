@@ -145,6 +145,18 @@ function TranslationsTab(props) {
       try {
         const translatedObject = JSON.parse(response.translation);
 
+        // eslint-disable-next-line max-len
+        translatedObject.settings_modal.blocks = translatedObject.settings_modal.blocks.map((block, index) => {
+          if (Object.hasOwn(originalStrings.settings_modal.blocks[index], 'toggle')) {
+            return {
+              ...block,
+              toggle: originalStrings.settings_modal.blocks[index].toggle,
+            };
+          }
+
+          return block;
+        });
+
         dispatch({
           type: ActionTypes.UPDATE_ENTIRE_LANGUAGE,
           payload: {
