@@ -279,6 +279,7 @@ class Migrator {
      * @return void
      */
     private function migrate_1_9_0(): void {
+        // Migrate log files to the new location
         $previous_logs_path = PLUGIN_DIR . 'logs/error.log';
         $new_logs_path      = ( new File_Logger() )->get_logs_path();
 
@@ -299,6 +300,24 @@ class Migrator {
         if ( $filesystem->exists( $previous_logs_dir ) ) {
             // Delete the old logs directory
             $filesystem->rmdir( $previous_logs_dir, true );
+        }
+
+        /*
+         * Previously AI translations did not include the toggles in each language,
+         * so we need to migrate them from the default language to fix any issues.
+         */
+        $default_lang = array_key_first( $this->settings['languages'] );
+
+        $necessary_toggle   = $this->settings['languages'][ $default_lang ]['settings_modal']['blocks'][1]['toggle'] ?? array();
+        $analytics_toggle   = $this->settings['languages'][ $default_lang ]['settings_modal']['blocks'][2]['toggle'] ?? array();
+        $targeting_toggle   = $this->settings['languages'][ $default_lang ]['settings_modal']['blocks'][3]['toggle'] ?? array();
+        $preferences_toggle = $this->settings['languages'][ $default_lang ]['settings_modal']['blocks'][4]['toggle'] ?? array();
+
+        foreach ( $this->settings['languages'] as $lang => $lang_settings ) {
+            $this->settings['languages'][ $lang ]['settings_modal']['blocks'][1]['toggle'] = $necessary_toggle;
+            $this->settings['languages'][ $lang ]['settings_modal']['blocks'][2]['toggle'] = $analytics_toggle;
+            $this->settings['languages'][ $lang ]['settings_modal']['blocks'][3]['toggle'] = $targeting_toggle;
+            $this->settings['languages'][ $lang ]['settings_modal']['blocks'][4]['toggle'] = $preferences_toggle;
         }
     }
 
