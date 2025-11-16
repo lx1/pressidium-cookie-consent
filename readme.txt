@@ -186,7 +186,7 @@ If you have spotted any bugs, or would like to request additional features from 
 
 == Changelog ==
 
-= 1.9.0: Nov 14, 2025 =
+= 1.9.0: Nov 17, 2025 =
 
 * Introduce a server-side PHP proxy to route traffic to Google tag gateway for advertisers
 * Add meta boxes to the settings page to provide links to relevant resources
@@ -197,6 +197,7 @@ If you have spotted any bugs, or would like to request additional features from 
 * Fix a couple of a11y issues with the floating button
 * Fix a compatibility issue with the Hello Elementor theme
 * Fix an issue where AI translations were missing the `toggle` property
+* Update allowed AI models (GPT and Gemini integrations)
 
 = 1.8.1: Oct 16, 2025 =
 
