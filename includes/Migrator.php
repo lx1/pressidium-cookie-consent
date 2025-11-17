@@ -302,6 +302,16 @@ class Migrator {
             $filesystem->rmdir( $previous_logs_dir, true );
         }
 
+        // Google tag gateway defaults
+        $default_tag_gateway = array(
+            'proxy_enabled' => false,
+            'gtag_id'       => '',
+        );
+
+        $tag_gateway = $this->settings['pressidium_options']['google_tag_gateway'] ?? $default_tag_gateway;
+
+        $this->settings['pressidium_options']['google_tag_gateway'] = $tag_gateway;
+
         /*
          * Previously AI translations did not include the toggles in each language,
          * so we need to migrate them from the default language to fix any issues.
