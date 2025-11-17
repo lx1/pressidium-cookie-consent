@@ -68,6 +68,10 @@ Automatically parse the user agent to detect bots, crawlers, and webdrivers. If 
 
 Integrate with Google Consent Mode (GCM) to adjust how Google tags behave based on the user’s consent preferences. Supports both Google tag (gtag.js) and Google Tag Manager (GTM) implementations.
 
+= 🚪 Google tag gateway integration =
+
+One-click PHP proxy to quickly route traffic to Google tag gateway for advertisers.
+
 = ✨ AI integration =
 
 Integrate with AI to generate translations and cookie descriptions. Supports both GPT and Gemini.
