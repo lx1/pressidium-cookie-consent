@@ -5,12 +5,31 @@ import {
   useMemo,
   useCallback,
 } from '@wordpress/element';
-import { TabPanel, Spinner, Notice } from '@wordpress/components';
+import {
+  TabPanel,
+  Flex,
+  FlexItem,
+  Spinner,
+  Panel as WPPanel,
+  PanelHeader,
+  PanelBody,
+  PanelRow,
+  Button,
+  Notice,
+} from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import {
+  help as HelpIcon,
+  people as PeopleIcon,
+  starFilled as StarIcon,
+} from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
-
 import { useBeforeunload } from 'react-beforeunload';
+
+import {
+  pressidium as PressidiumIcon,
+} from './icons';
 
 import { usePrevious } from '../hooks';
 import { removeElement, delay, deepCopy } from '../utils';
@@ -24,6 +43,7 @@ import TranslationsTab from './tabs/TranslationsTab';
 import ModalsTab from './tabs/ModalsTab';
 import FloatingButtonTab from './tabs/FloatingButtonTab';
 import ConsentModeTab from './tabs/ConsentModeTab';
+import TagGatewayTab from './tabs/TagGatewayTab';
 import BlockedScriptsTab from './tabs/BlockedScriptsTab';
 import ConsentRecordsTab from './tabs/ConsentRecordsTab';
 import LogsTab from './tabs/LogsTab';
@@ -43,6 +63,13 @@ function SettingsPanel() {
   const [fonts, setFonts] = useState([]);
 
   const { state, dispatch } = useContext(SettingsContext);
+
+  const urls = {
+    docs: 'https://github.com/pressidium/pressidium-cookie-consent/wiki',
+    review: 'https://wordpress.org/support/plugin/pressidium-cookie-consent/reviews/#new-post',
+    github: 'https://github.com/pressidium/pressidium-cookie-consent/blob/master/CONTRIBUTING.md',
+    pressidium: 'https://pressidium.com/free-trial/?utm_source=pccplugin&utm_medium=metabox&utm_campaign=wpplugins',
+  };
 
   const appendNotice = useCallback(({ message, status, id = null }) => {
     setNotices((prevNotices) => {
@@ -658,115 +685,230 @@ function SettingsPanel() {
           {message}
         </Notice>
       ))}
-      <Panel>
-        <TabPanel
-          className="my-tab-panel"
-          activeClass="active-tab"
-          onSelect={(tabName) => setSelectedTab(tabName)}
-          tabs={[
-            {
-              name: 'general',
-              title: __('General', 'pressidium-cookie-consent'),
-              className: 'tab-general',
-              Component: GeneralTab,
-            },
-            {
-              name: 'cookies',
-              title: __('Cookies', 'pressidium-cookie-consent'),
-              className: 'tab-cookies-list',
-              Component: CookiesTab,
-            },
-            {
-              name: 'translations',
-              title: __('Translations', 'pressidium-cookie-consent'),
-              className: 'tab-translations',
-              Component: TranslationsTab,
-            },
-            {
-              name: 'modals',
-              title: __('Modals', 'pressidium-cookie-consent'),
-              className: 'tab-modals',
-              Component: ModalsTab,
-            },
-            {
-              name: 'floating-button',
-              title: __('Floating Button', 'pressidium-cookie-consent'),
-              className: 'tab-floating-button',
-              Component: FloatingButtonTab,
-            },
-            {
-              name: 'consent-mode',
-              title: __('Consent Mode', 'pressidium-cookie-consent'),
-              className: 'tab-consent-mode',
-              Component: ConsentModeTab,
-            },
-            {
-              name: 'blocked-scripts',
-              title: __('Blocked Scripts', 'pressidium-cookie-consent'),
-              className: 'tab-blocked-scripts',
-              Component: BlockedScriptsTab,
-            },
-            {
-              name: 'consent-records',
-              title: __('Consent Records', 'pressidium-cookie-consent'),
-              className: 'tab-consent-records',
-              Component: ConsentRecordsTab,
-            },
-            {
-              name: 'logs',
-              title: __('Logs', 'pressidium-cookie-consent'),
-              className: 'tab-logs',
-              Component: LogsTab,
-            },
-            {
-              name: 'about',
-              title: __('About', 'pressidium-cookie-consent'),
-              className: 'tab-about',
-              Component: AboutTab,
-            },
-          ]}
+
+      <Flex justify="flex-start" align="flex-start">
+        <FlexItem>
+          <Panel>
+            <TabPanel
+              className="my-tab-panel"
+              activeClass="active-tab"
+              onSelect={(tabName) => setSelectedTab(tabName)}
+              tabs={[
+                {
+                  name: 'general',
+                  title: __('General', 'pressidium-cookie-consent'),
+                  className: 'tab-general',
+                  Component: GeneralTab,
+                },
+                {
+                  name: 'cookies',
+                  title: __('Cookies', 'pressidium-cookie-consent'),
+                  className: 'tab-cookies-list',
+                  Component: CookiesTab,
+                },
+                {
+                  name: 'translations',
+                  title: __('Translations', 'pressidium-cookie-consent'),
+                  className: 'tab-translations',
+                  Component: TranslationsTab,
+                },
+                {
+                  name: 'modals',
+                  title: __('Modals', 'pressidium-cookie-consent'),
+                  className: 'tab-modals',
+                  Component: ModalsTab,
+                },
+                {
+                  name: 'floating-button',
+                  title: __('Floating Button', 'pressidium-cookie-consent'),
+                  className: 'tab-floating-button',
+                  Component: FloatingButtonTab,
+                },
+                {
+                  name: 'consent-mode',
+                  title: __('Consent Mode', 'pressidium-cookie-consent'),
+                  className: 'tab-consent-mode',
+                  Component: ConsentModeTab,
+                },
+                {
+                  name: 'tag-gateway',
+                  title: __('Tag Gateway', 'pressidium-cookie-consent'),
+                  className: 'tab-tag-gateway',
+                  Component: TagGatewayTab,
+                },
+                {
+                  name: 'blocked-scripts',
+                  title: __('Blocked Scripts', 'pressidium-cookie-consent'),
+                  className: 'tab-blocked-scripts',
+                  Component: BlockedScriptsTab,
+                },
+                {
+                  name: 'consent-records',
+                  title: __('Consent Records', 'pressidium-cookie-consent'),
+                  className: 'tab-consent-records',
+                  Component: ConsentRecordsTab,
+                },
+                {
+                  name: 'logs',
+                  title: __('Logs', 'pressidium-cookie-consent'),
+                  className: 'tab-logs',
+                  Component: LogsTab,
+                },
+                {
+                  name: 'about',
+                  title: __('About', 'pressidium-cookie-consent'),
+                  className: 'tab-about',
+                  Component: AboutTab,
+                },
+              ]}
+            >
+              {({ Component }) => {
+                const componentPropsMap = {
+                  general: {
+                    fonts,
+                  },
+                  cookies: {
+                    openAIConfigModal,
+                    appendNotice,
+                  },
+                  translations: {
+                    openAIConfigModal,
+                    appendNotice,
+                  },
+                  'consent-records': {
+                    isExportingCsv,
+                    exportConsentRecords,
+                    clearRecords,
+                  },
+                };
+
+                const props = selectedTab in componentPropsMap
+                  ? componentPropsMap[selectedTab]
+                  : {};
+
+                return (
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  <Component {...props} />
+                );
+              }}
+            </TabPanel>
+            <Footer
+              save={() => saveSettings(state)}
+              previewConsentModal={previewConsentModal}
+              previewSettingsModal={previewSettingsModal}
+              previewFloatingButton={previewFloatingButton}
+              hasUnsavedChanges={hasUnsavedChanges}
+              exportSettings={exportSettings}
+              importSettings={importSettings}
+              resetSettings={resetSettings}
+            />
+          </Panel>
+        </FlexItem>
+        <FlexItem
+          className="pressidium-hide-on-xl"
+          style={{ maxWidth: '300px' }}
         >
-          {({ Component }) => {
-            const componentPropsMap = {
-              general: {
-                fonts,
-              },
-              cookies: {
-                openAIConfigModal,
-                appendNotice,
-              },
-              translations: {
-                openAIConfigModal,
-                appendNotice,
-              },
-              'consent-records': {
-                isExportingCsv,
-                exportConsentRecords,
-                clearRecords,
-              },
-            };
+          <Flex direction="column">
+            <FlexItem>
+              <WPPanel>
+                <PanelHeader>
+                  {__('Need help?', 'pressidium-cookie-consent')}
+                </PanelHeader>
+                <PanelBody>
+                  <PanelRow>
+                    {__('Browse our step-by-step documentation to set up, customize, and make the most of the plugin.', 'pressidium-cookie-consent')}
+                  </PanelRow>
+                  <PanelRow>
+                    <Button
+                      icon={HelpIcon}
+                      href={urls.docs}
+                      target="_blank"
+                      variant="secondary"
+                    >
+                      {__('Read Documentation', 'pressidium-cookie-consent')}
+                    </Button>
+                  </PanelRow>
+                </PanelBody>
+              </WPPanel>
+            </FlexItem>
+            <FlexItem>
+              <WPPanel>
+                <PanelHeader>
+                  {__('Enjoying the plugin?', 'pressidium-cookie-consent')}
+                </PanelHeader>
+                <PanelBody>
+                  <PanelRow>
+                    {__('Share the love! Drop a positive review, keep us smiling and help others find their new favorite plugin!', 'pressidium-cookie-consent')}
+                  </PanelRow>
+                  <PanelRow>
+                    <Button
+                      icon={StarIcon}
+                      href={urls.review}
+                      target="_blank"
+                      variant="secondary"
+                    >
+                      {__('Leave a Review', 'pressidium-cookie-consent')}
+                    </Button>
+                  </PanelRow>
+                </PanelBody>
+              </WPPanel>
+            </FlexItem>
+            <FlexItem>
+              <WPPanel>
+                <PanelHeader>
+                  {__('Shape the future', 'pressidium-cookie-consent')}
+                </PanelHeader>
+                <PanelBody>
+                  <PanelRow>
+                    {__('Report issues, suggest improvements, or contribute code. Every bit of feedback helps us grow and improve.', 'pressidium-cookie-consent')}
+                  </PanelRow>
+                  <PanelRow>
+                    <Button
+                      icon={PeopleIcon}
+                      href={urls.github}
+                      target="_blank"
+                      variant="secondary"
+                    >
+                      {__('Contribute on GitHub', 'pressidium-cookie-consent')}
+                    </Button>
+                  </PanelRow>
+                </PanelBody>
+              </WPPanel>
+            </FlexItem>
+            <FlexItem>
+              <WPPanel>
+                <PanelHeader>
+                  {__('Built by Pressidium®', 'pressidium-cookie-consent')}
+                </PanelHeader>
+                <PanelBody>
+                  <PanelRow>
+                    {__('Managed hosting for WordPress optimized for performance, security, and scalability.', 'pressidium-cookie-consent')}
+                  </PanelRow>
+                  <PanelRow>
+                    {__('Go Further. Go Faster. Go EDGE ⚡', 'pressidium-cookie-consent')}
+                  </PanelRow>
+                  <PanelRow>
+                    <span style={{ fontWeight: 600 }}>
+                      {__('Enjoy 14-days of superior hosting for free!', 'pressidium-cookie-consent')}
+                    </span>
+                  </PanelRow>
+                  <PanelRow>
+                    <Button
+                      icon={PressidiumIcon}
+                      href={urls.pressidium}
+                      target="_blank"
+                      variant="secondary"
+                    >
+                      {__('Start your Free Trial', 'pressidium-cookie-consent')}
+                    </Button>
+                  </PanelRow>
+                </PanelBody>
+              </WPPanel>
+            </FlexItem>
+          </Flex>
+        </FlexItem>
+      </Flex>
 
-            const props = selectedTab in componentPropsMap
-              ? componentPropsMap[selectedTab]
-              : {};
-
-            return (
-              // eslint-disable-next-line react/jsx-props-no-spreading
-              <Component {...props} />
-            );
-          }}
-        </TabPanel>
-        <Footer
-          save={() => saveSettings(state)}
-          previewConsentModal={previewConsentModal}
-          previewSettingsModal={previewSettingsModal}
-          previewFloatingButton={previewFloatingButton}
-          hasUnsavedChanges={hasUnsavedChanges}
-          exportSettings={exportSettings}
-          importSettings={importSettings}
-          resetSettings={resetSettings}
-        />
-      </Panel>
       <AIConfigModal
         isOpen={isAIConfigModalOpen}
         onClose={closeAIConfigModal}

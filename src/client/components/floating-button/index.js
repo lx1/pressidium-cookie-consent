@@ -136,7 +136,7 @@ template.innerHTML = `
       }
     }
   </style>
-  <button class="button">
+  <button class="button" type="button" aria-label="Cookie settings">
     <slot name="icon"></slot>
   </button>
 `;
@@ -397,12 +397,9 @@ class FloatingButton extends HTMLElement {
    * @return {void}
    */
   _updateLabel() {
-    /*
-     * This has to be set to the host element, not the button.
-     * Otherwise, it won't be read by some screen readers.
-     */
-    this.setAttribute('aria-label', this._label);
-    this.setAttribute('role', 'button');
+    const button = this.shadowRoot.querySelector('.button');
+
+    button.setAttribute('aria-label', this._label);
   }
 
   /**
