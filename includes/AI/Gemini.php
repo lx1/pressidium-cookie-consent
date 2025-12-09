@@ -108,6 +108,7 @@ final class Gemini extends AI {
             'models/gemini-2.0-flash',
             'models/gemini-2.0-flash-lite',
             'models/gemini-2.5-flash-lite',
+            'models/gemini-3-pro-preview',
         );
     }
 
