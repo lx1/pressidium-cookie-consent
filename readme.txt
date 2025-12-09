@@ -4,9 +4,9 @@ Plugin URI: https://pressidium.com/open-source/cookie-consent-plugin/
 Contributors: pressidium, overengineer
 Tags: cookie, consent, gdpr, ccpa, cookies
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 8.1
-Stable Tag: 1.9.0
+Stable Tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -189,6 +189,11 @@ If you have spotted any bugs, or would like to request additional features from 
 12. Pressidium Cookies Table block
 
 == Changelog ==
+
+= 1.9.1: Dec 9, 2025 =
+
+* Update “Tested up to” version to WordPress 6.9 to confirm compatibility
+* Update allowed AI models to include Gemini 3 Pro Preview
 
 = 1.9.0: Nov 17, 2025 =
 
