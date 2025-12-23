@@ -16,10 +16,6 @@
     &__tabs-item.active-tab {
       box-shadow: inset 0 0 0 var(--wp-admin-border-width-focus) transparent, inset 0 -1.5px 0 0 var(--wp-admin-theme-color);
     }
-
-    &__tab-content {
-      //padding: 16px 24px;
-    }
   }
 
   .components-base-control {
@@ -97,6 +93,34 @@
     padding-right: 12px;
   }
 
+  .pressidium-badge {
+    display: inline-block;
+
+    padding: 0 1em;
+    line-height: 2.5em;
+    border-radius: 4px;
+
+    &--success {
+      background-color: #c6e1c6;
+      color: #5b841b;
+    }
+
+    &--error {
+      background-color: #eba3a3;
+      color: #761919;
+    }
+
+    &--warning {
+      background-color: #f8dda7;
+      color: #94660c;
+    }
+
+    &--info {
+      background-color: #c8d7e1;
+      color: #2e4453;
+    }
+  }
+
 }
 
 .pressidium-scrollable {
@@ -108,6 +132,36 @@
   font-size: 11px;
   text-align: center;
   margin-top: 1.4em;
+}
+
+@media (max-width: 639px) {
+  .pressidium-hide-on-sm {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .pressidium-hide-on-md {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .pressidium-hide-on-lg {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1279px) {
+  .pressidium-hide-on-xl {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1535px) {
+  .pressidium-hide-on-2xl {
+    display: none !important;
+  }
 }
 
 :root {

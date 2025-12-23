@@ -62,7 +62,7 @@ class Settings_Page extends Page implements Actions, Filters {
      * @return string
      */
     protected function get_page_title(): string {
-        return __( 'Cookie Consent', 'pressidium-cookie-consent' );
+        return __( 'Pressidium Cookie Consent', 'pressidium-cookie-consent' );
     }
 
     /**
@@ -216,7 +216,7 @@ class Settings_Page extends Page implements Actions, Filters {
             '<span id="pressidium-cc-footer">%s</span>',
             sprintf(
                 /* translators: 1: Developer name, 2: Link to the docs. */
-                __( 'Developed by %1$s | For more information, read the %2$s.', 'pressidium-cookie-consent' ),
+                __( 'Developed by %1$s | Curious to learn more? Head over to the %2$s.', 'pressidium-cookie-consent' ),
                 sprintf(
                     '<a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
                     // phpcs:ignore Generic.Files.LineLength
@@ -226,7 +226,7 @@ class Settings_Page extends Page implements Actions, Filters {
                 sprintf(
                     '<a href="%1$s" target="_blank" rel="noopener noreferrer">%2$s</a>',
                     esc_url( 'https://github.com/pressidium/pressidium-cookie-consent/wiki' ),
-                    __( 'documentation', 'pressidium-cookie-consent' )
+                    __( 'docs', 'pressidium-cookie-consent' )
                 )
             )
         );

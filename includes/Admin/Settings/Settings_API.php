@@ -17,6 +17,7 @@ use Pressidium\WP\CookieConsent\Emoji;
 use Pressidium\WP\CookieConsent\Logs;
 use Pressidium\WP\CookieConsent\Geo_Locator;
 use Pressidium\WP\CookieConsent\Database\Tables\Consents_Table;
+use Pressidium\WP\CookieConsent\Utils\Date_Utils;
 
 use WP_REST_Request;
 use WP_REST_Response;
@@ -727,6 +728,21 @@ class Settings_API implements Actions {
                                 ),
                             ),
                         ),
+                        'google_tag_gateway' => array(
+                            'type' => 'object',
+                            'required' => array(
+                                'proxy_enabled',
+                                'gtag_id',
+                            ),
+                            'properties' => array(
+                                'proxy_enabled' => array(
+                                    'type' => 'boolean',
+                                ),
+                                'gtag_id' => array(
+                                    'type' => 'string',
+                                ),
+                            ),
+                        ),
                     ),
                 ),
             ),
@@ -779,6 +795,24 @@ class Settings_API implements Actions {
     }
 
     /**
+     * Flush rewrite rules if Google Tag Gateway proxy setting changed.
+     *
+     * @param array $new_settings New settings.
+     *
+     * @return void
+     */
+    private function maybe_flush_rewrite_rules( array $new_settings ): void {
+        $prev_settings = Emoji::decode_array( $this->settings->get() );
+
+        $prev_tag_gateway_proxy_enabled = $prev_settings['pressidium_options']['google_tag_gateway']['proxy_enabled'] ?? false;
+        $new_tag_gateway_proxy_enabled  = $new_settings['pressidium_options']['google_tag_gateway']['proxy_enabled'] ?? false;
+
+        if ( $prev_tag_gateway_proxy_enabled !== $new_tag_gateway_proxy_enabled ) {
+            flush_rewrite_rules();
+        }
+    }
+
+    /**
      * Migrate the given settings to the latest version, if necessary.
      *
      * @param array $settings Settings to migrate.
@@ -818,6 +852,8 @@ class Settings_API implements Actions {
 
         $settings['revision'] = $this->maybe_increment_revision( $settings );
         $settings['version']  = VERSION;
+
+        $this->maybe_flush_rewrite_rules( $settings );
 
         $set_successfully = $this->settings->set( $settings );
 
@@ -1075,6 +1111,15 @@ class Settings_API implements Actions {
                     $row['analytics_consent']   = (bool) $row['analytics_consent'];
                     $row['targeting_consent']   = (bool) $row['targeting_consent'];
                     $row['preferences_consent'] = (bool) $row['preferences_consent'];
+
+                    // Convert UTC to WP timezone
+                    $consent_date = Date_Utils::utc_to_wp_timezone( $row['consent_date'], 'Y-m-d H:i:s (e)' );
+                    $created_at   = Date_Utils::utc_to_wp_timezone( $row['created_at'], 'Y-m-d H:i:s (e)' );
+                    $updated_at   = Date_Utils::utc_to_wp_timezone( $row['updated_at'], 'Y-m-d H:i:s (e)' );
+
+                    $row['consent_date'] = is_null( $consent_date ) ? $row['consent_date'] : $consent_date;
+                    $row['created_at']   = is_null( $created_at ) ? $row['created_at'] : $created_at;
+                    $row['updated_at']   = is_null( $updated_at ) ? $row['updated_at'] : $updated_at;
 
                     return $row;
                 },

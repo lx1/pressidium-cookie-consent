@@ -16,6 +16,7 @@ use Pressidium\WP\CookieConsent\Dependencies\Psr\Container\NotFoundExceptionInte
 
 use Pressidium\WP\CookieConsent\Admin\Settings\Service_Provider as Settings_Service_Provider;
 use Pressidium\WP\CookieConsent\Client\Service_Provider as Client_Service_Provider;
+use Pressidium\WP\CookieConsent\Proxy\Service_Provider as Proxy_Service_Provider;
 use Pressidium\WP\CookieConsent\Feedback\Service_Provider as Feedback_Service_Provider;
 use Pressidium\WP\CookieConsent\Blocks\Service_Provider as Blocks_Service_Provider;
 use Pressidium\WP\CookieConsent\Shortcodes\Service_Provider as Shortcodes_Service_Provider;
@@ -68,25 +69,11 @@ class Plugin {
     }
 
     /**
-     * Load plugin text domain.
-     *
-     * @return void
-     */
-    public function load_textdomain(): void {
-        load_plugin_textdomain(
-            'pressidium-cookie-consent',
-            false, // this parameter is deprecated
-            dirname( plugin_basename( __FILE__ ) ) . '/languages'
-        );
-    }
-
-    /**
      * Add WordPress hooks.
      *
      * @return void
      */
     private function add_hooks(): void {
-        add_action( 'init', array( $this, 'load_textdomain' ) );
         add_action( 'init', array( $this, 'register_blocks' ) );
     }
 
@@ -100,6 +87,7 @@ class Plugin {
             $this->container->addServiceProvider( Feedback_Service_Provider::class );
             $this->container->addServiceProvider( Settings_Service_Provider::class );
             $this->container->addServiceProvider( Client_Service_Provider::class );
+            $this->container->addServiceProvider( Proxy_Service_Provider::class );
             $this->container->addServiceProvider( Blocks_Service_Provider::class );
             $this->container->addServiceProvider( Shortcodes_Service_Provider::class );
             $this->container->addServiceProvider( Integrations_Service_Provider::class );
@@ -123,6 +111,7 @@ class Plugin {
             $hooks_manager->register( $this->container->get( 'settings_page' ) );
             $hooks_manager->register( $this->container->get( 'cookie_consent' ) );
             $hooks_manager->register( $this->container->get( 'consent_mode' ) );
+            $hooks_manager->register( $this->container->get( 'tag_gateway_proxy' ) );
             $hooks_manager->register( $this->container->get( 'feedback' ) );
             $hooks_manager->register( $this->container->get( 'cookies_block' ) );
             $hooks_manager->register( $this->container->get( 'wp_consent_api' ) );

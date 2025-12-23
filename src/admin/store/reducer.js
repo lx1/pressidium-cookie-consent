@@ -474,6 +474,30 @@ function settingsReducer(state, action) {
       };
     }
 
+    case ActionTypes.UPDATE_TAG_GATEWAY_SETTINGS:
+      return {
+        ...state,
+        pressidium_options: {
+          ...state.pressidium_options,
+          google_tag_gateway: {
+            ...state.pressidium_options.google_tag_gateway,
+            ...action.payload,
+          },
+        },
+      };
+
+    case ActionTypes.UPDATE_TAG_GATEWAY_SETTING:
+      return {
+        ...state,
+        pressidium_options: {
+          ...state.pressidium_options,
+          google_tag_gateway: {
+            ...state.pressidium_options.google_tag_gateway,
+            [action.payload.key]: action.payload.value,
+          },
+        },
+      };
+
     case ActionTypes.UPDATE_PRESSIDIUM_OPTION:
       return {
         ...state,

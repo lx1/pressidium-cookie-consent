@@ -4,9 +4,9 @@ Plugin URI: https://pressidium.com/open-source/cookie-consent-plugin/
 Contributors: pressidium, overengineer
 Tags: cookie, consent, gdpr, ccpa, cookies
 Requires at least: 6.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 8.1
-Stable Tag: 1.8.0
+Stable Tag: 1.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,10 @@ Automatically parse the user agent to detect bots, crawlers, and webdrivers. If 
 = 🧩 Google Consent Mode (GCM) integration =
 
 Integrate with Google Consent Mode (GCM) to adjust how Google tags behave based on the user’s consent preferences. Supports both Google tag (gtag.js) and Google Tag Manager (GTM) implementations.
+
+= 🚪 Google tag gateway integration =
+
+One-click PHP proxy to quickly route traffic to Google tag gateway for advertisers.
 
 = ✨ AI integration =
 
@@ -185,6 +189,31 @@ If you have spotted any bugs, or would like to request additional features from 
 12. Pressidium Cookies Table block
 
 == Changelog ==
+
+= 1.9.1: Dec 9, 2025 =
+
+* Update “Tested up to” version to WordPress 6.9 to confirm compatibility
+* Update allowed AI models to include Gemini 3 Pro Preview
+
+= 1.9.0: Nov 17, 2025 =
+
+* Introduce a server-side PHP proxy to route traffic to Google tag gateway for advertisers
+* Add meta boxes to the settings page to provide links to relevant resources
+* Move log directory to the uploads directory (`wp-content/uploads/pressidium-cookie-consent/logs/`)
+* Expose the `pressidium_cookie_consent_logs_path` filter to allow customizing the log file path
+* Convert and display consent record timestamps according to the WordPress timezone (instead of UTC)
+* Fix an issue where `pressidium_cookie_consent_get_cookies()` would trigger a warning when no settings existed
+* Fix a couple of a11y issues with the floating button
+* Fix a compatibility issue with the Hello Elementor theme
+* Fix an issue where AI translations were missing the `toggle` property
+* Update allowed AI models (GPT and Gemini integrations)
+
+= 1.8.1: Oct 16, 2025 =
+
+* Fix an issue with the names of the custom events pushed to the data layer for Google Tag Manager
+* Revert the modal headings to use `div` instead of `h2` to fix potential SEO issues
+* Remove no longer necessary `load_plugin_textdomain()` (plugins hosted on WordPress.org don't need it)
+* Integrate with Ninja Forms to prevent the cookie consent banner from loading on form previews
 
 = 1.8.0: May 5, 2025 =
 

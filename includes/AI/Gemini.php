@@ -103,10 +103,12 @@ final class Gemini extends AI {
      */
     protected function get_allowed_models(): array {
         return array(
-            'models/gemini-1.5-pro',
-            'models/gemini-1.5-flash',
+            'models/gemini-2.5-flash',
+            'models/gemini-2.5-pro',
             'models/gemini-2.0-flash',
             'models/gemini-2.0-flash-lite',
+            'models/gemini-2.5-flash-lite',
+            'models/gemini-3-pro-preview',
         );
     }
 
